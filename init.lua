@@ -67,7 +67,17 @@ end
 vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 	--	go to lua/plugins for the modules of all the installed plugins 
-	import = 'plugins'}, {}
+	spec = {
+		import = 'plugins'
+	},
+	ui = {
+		border = "double", 
+		size = {
+			width = 0.8,
+			height = 0.8,
+		},
+	},
+}, {}
 )
 require("configs.tokyonight")
 -- require("configs.dracula")
