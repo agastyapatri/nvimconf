@@ -104,11 +104,21 @@ vim.keymap.set('n', '<leader>tl', '<Cmd>+tabmove<CR>')
 --	KEYMAPS: diagnostics
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+-- vim.keymap.set('n', '[d', vim.diagnostic.jump({count = -1}), { desc = 'Go to previous diagnostic message' })
+-- vim.keymap.set('n', ']d', vim.diagnostic.jump({count = 1}), { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 
 -- For LSP keymaps - buf.rename etc. check out configs.nvim-lspconfig.lua
-
+-- TEMPORARY: diagnostic configuration 
+vim.diagnostic.config({
+	underline = true,
+	signs=true,
+	virtual_text = true,
+	float = {
+		border = 'rounded',
+	}
+})
 
 
