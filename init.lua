@@ -80,7 +80,6 @@ require('lazy').setup({
 }, {}
 )
 require("configs.tokyonight")
--- require("configs.dracula")
 require("configs.indent-blankline")
 require("configs.nvim-lspconfig")
 require("configs.treesitter")
@@ -89,7 +88,7 @@ require("configs.telescope")
 require("configs.nvim-tree")
 require("configs.nvim-cmp")
 require("configs.noice")
-
+-- require("configs.lualine")
 
 
 --	KEYMAPS: tabs 
