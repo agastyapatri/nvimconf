@@ -14,6 +14,7 @@ vim.wo.number = true
 vim.o.mouse = 'a'
 vim.o.clipboard = 'unnamedplus'
 vim.o.breakindent = true
+vim.o.cindent = true 
 vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -44,15 +45,6 @@ vim.opt.undofile = false
 
 
 
---	PACKAGES AND CONFIGS
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-	group = highlight_group,
-	pattern = '*',
-})
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system {
@@ -79,38 +71,39 @@ require('lazy').setup({
 	},
 }, {}
 )
-require("configs.tokyonight")
+-- require("configs.tokyonight")
+require("configs.kanso")
 require("configs.indent-blankline")
-require("configs.nvim-lspconfig")
+-- require("configs.nvim-lspconfig")
 require("configs.treesitter")
 require("configs.toggleterm")
 require("configs.telescope")
 require("configs.nvim-tree")
-require("configs.nvim-cmp")
+-- require("configs.nvim-cmp")
 require("configs.noice")
--- require("configs.lualine")
+require("configs.mason")
 
 
---	KEYMAPS: tabs 
+--	KEYMAPS: tabs and splits
 vim.keymap.set({"n", "v", "i"}, "<C-n>", vim.cmd.tabnew)
 vim.keymap.set({"n", "v", "i"}, "<A-l>", vim.cmd.tabn)
 vim.keymap.set({"n", "v", "i"}, "<A-h>", vim.cmd.tabp)
+vim.keymap.set({"n", "v", "i"}, "<A-s>", vim.cmd.vsplit)
 vim.keymap.set('n', '<leader>th', '<Cmd>-tabmove<CR>')
 vim.keymap.set('n', '<leader>tl', '<Cmd>+tabmove<CR>')
 
 
 
 --	KEYMAPS: diagnostics
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
--- vim.keymap.set('n', '[d', vim.diagnostic.jump({count = -1}), { desc = 'Go to previous diagnostic message' })
--- vim.keymap.set('n', ']d', vim.diagnostic.jump({count = 1}), { desc = 'Go to next diagnostic message' })
+-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 
--- For LSP keymaps - buf.rename etc. check out configs.nvim-lspconfig.lua
--- TEMPORARY: diagnostic configuration 
+
+
+-- LSP STUFF; diagnostics, servers, autocomplete and more fun
 vim.diagnostic.config({
 	underline = true,
 	signs=true,
@@ -119,5 +112,35 @@ vim.diagnostic.config({
 		border = 'rounded',
 	}
 })
+
+-- enabling lsp servers ; take a look at ~/.config/nvim/lsp for more info 
+vim.lsp.enable({'clangd', 'pyright', 'lua_ls'})
+--
+-- vim.api.nvim_create_autocmd('LspAttach', {
+-- 	callback = function(ev)
+-- 		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+-- 		if client:supports_method('textDocument/completion') then
+-- 			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+-- 		end
+-- 	end,
+-- })
+--
+--	HIGHLIGHT ON YANK
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+	group = highlight_group,
+	pattern = '*',
+})
+
+
+
+
+
+
+
+
 
 

@@ -22,3 +22,27 @@ vim.keymap.set('n', '<leader>lg', builtin.live_grep, { desc = '[F]ind by [G]rep'
 vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]resume' })
 
+
+
+
+
+
+-- COLORS FOR KANSO ZEN
+local _red = "#c4746e"
+local _black = "#0d060c"
+vim.api.nvim_set_hl(0, "TelescopeBorder", {
+	bg = _black,
+	fg = _red,
+})
+vim.api.nvim_set_hl(0, "TelescopePreviewTitle", {
+	bg = _black,
+	fg = _red,
+})
+vim.api.nvim_set_hl(0, "TelescopePromptTitle", {
+	bg = _black,
+	fg = _red,
+})
+vim.api.nvim_set_hl(0, "TelescopeResultsTitle", {
+	bg = _black,
+	fg = _red,
+})

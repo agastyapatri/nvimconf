@@ -1,4 +1,7 @@
 return {
+	{
+		"mason-org/mason.nvim"
+	},
 	{	
 		'tpope/vim-fugitive',
 		event = 'VeryLazy',
@@ -11,9 +14,6 @@ return {
 	-- 	COLORSCHEMES 
 	{	
 		"folke/tokyonight.nvim"
-	},
-	{	
-		"Mofiqul/dracula.nvim"
 	},
 	{
 		'windwp/nvim-autopairs',
@@ -107,25 +107,6 @@ return {
 			},
 		},
 	},
-
-	{
-		-- LSP Configuration & Plugins
-		'neovim/nvim-lspconfig',
-		event = {"BufReadPost", "BufNewFile"},
-		dependencies = {
-			-- Automatically install LSPs to stdpath for neovim
-			{ 'williamboman/mason.nvim', config = true },
-			'williamboman/mason-lspconfig.nvim',
-
-			-- Useful status updates for LSP
-			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-			{ 'j-hui/fidget.nvim', opts = {} },
-
-			-- Additional lua configuration, makes nvim stuff amazing!
-			'folke/neodev.nvim',
-		},
-	},
-
 	{
 		'nvim-treesitter/nvim-treesitter',
 		event = {"BufReadPre"},
@@ -134,23 +115,6 @@ return {
 		},
 		build = ':TSUpdate',
 	},
-
-	{
-		'hrsh7th/nvim-cmp',
-		event = {"InsertEnter"},
-		dependencies = {
-			-- Snippet Engine & its associated nvim-cmp source
-			'L3MON4D3/LuaSnip',
-			'saadparwaiz1/cmp_luasnip',
-
-			-- Adds LSP completion capabilities
-			'hrsh7th/cmp-nvim-lsp',
-			'hrsh7th/cmp-path',
-
-			-- Adds a number of user-friendly snippets
-			'rafamadriz/friendly-snippets',
-		},
-	},
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
@@ -158,17 +122,39 @@ return {
 			-- add any options here
 		},
 		dependencies = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
-			-- "rcarriga/nvim-notify",
 		}
 	},
+	{
+		"webhooked/kanso.nvim",
+		lazy = false,
+		priority = 1000,
+	},
+	{
+		'saghen/blink.cmp',
+		-- optional: provides snippets for the snippet source
+		dependencies = { 'rafamadriz/friendly-snippets' },
+		version = '1.*',
+		-- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+		-- build = 'cargo build --release',
+		-- If you use nix, you can build from source using latest nightly rust with:
+		-- build = 'nix run .#build-plugin',
 
+		---@module 'blink.cmp'
+		---@type blink.cmp.Config
+		opts = {
+			keymap = { preset = 'enter' },
 
-
-
-
+			appearance = {
+				nerd_font_variant = 'mono'
+			},
+			completion = { documentation = { auto_show = false } },
+			sources = {
+				default = { 'lsp', 'path', 'snippets', 'buffer' },
+			},
+			fuzzy = { implementation = "prefer_rust_with_warning" }
+		},
+		opts_extend = { "sources.default" }
+	}
 }
+

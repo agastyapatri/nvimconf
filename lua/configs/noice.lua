@@ -20,4 +20,10 @@ require("noice").setup({
 		filter = {event = "msg_showmode"},
 	},
 })
-vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder", {fg = "#b30000"})
+
+
+local _kanso_red = "#c4746e"
+local _tokyonight_red = "#b30000"
+
+vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder", {fg = _kanso_red})
+
