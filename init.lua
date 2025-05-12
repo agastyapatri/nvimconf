@@ -71,15 +71,12 @@ require('lazy').setup({
 	},
 }, {}
 )
--- require("configs.tokyonight")
 require("configs.kanso")
 require("configs.indent-blankline")
--- require("configs.nvim-lspconfig")
 require("configs.treesitter")
 require("configs.toggleterm")
 require("configs.telescope")
 require("configs.nvim-tree")
--- require("configs.nvim-cmp")
 require("configs.noice")
 require("configs.mason")
 
@@ -113,18 +110,8 @@ vim.diagnostic.config({
 	}
 })
 
--- enabling lsp servers ; take a look at ~/.config/nvim/lsp for more info 
+-- ENABLING LSP SERVERS ; TAKE A LOOK AT ~/.CONFIG/NVIM/LSP FOR MORE INFO 
 vim.lsp.enable({'clangd', 'pyright', 'lua_ls'})
---
--- vim.api.nvim_create_autocmd('LspAttach', {
--- 	callback = function(ev)
--- 		local client = vim.lsp.get_client_by_id(ev.data.client_id)
--- 		if client:supports_method('textDocument/completion') then
--- 			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
--- 		end
--- 	end,
--- })
---
 --	HIGHLIGHT ON YANK
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -134,6 +121,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 	group = highlight_group,
 	pattern = '*',
 })
+-- changing the look of blink.cmp
 
 
 

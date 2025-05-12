@@ -148,13 +148,38 @@ return {
 			appearance = {
 				nerd_font_variant = 'mono'
 			},
-			completion = { documentation = { auto_show = false } },
+			completion = {
+				documentation = { 
+					auto_show = false,
+					border = "rounded"
+				},
+				menu = {
+					border = "rounded",
+					winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
+				},
+			},
 			sources = {
 				default = { 'lsp', 'path', 'snippets', 'buffer' },
 			},
 			fuzzy = { implementation = "prefer_rust_with_warning" }
 		},
 		opts_extend = { "sources.default" }
+	},
+	{
+		'Bekaboo/dropbar.nvim',
+		-- optional, but required for fuzzy finder support
+		dependencies = {
+			'nvim-telescope/telescope-fzf-native.nvim',
+			build = 'make'
+		},
+		config = function()
+			local dropbar_api = require('dropbar.api')
+			vim.keymap.set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in winbar' })
+			vim.keymap.set('n', '[;', dropbar_api.goto_context_start, { desc = 'Go to start of current context' })
+			vim.keymap.set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
+		end,
+		cmdline = {enabled  = false},
+		signature = {enabled = true},
 	}
 }
 
